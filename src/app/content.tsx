@@ -7,7 +7,7 @@ export function Content(props:{content:number, setContent:Dispatch<SetStateActio
     let setContent = props.setContent;
     switch(content) {
       case 1:
-        <Intro></Intro>
+        return (<Intro></Intro>);
         break;
       case 2:
         return (
@@ -17,7 +17,7 @@ export function Content(props:{content:number, setContent:Dispatch<SetStateActio
         );
         break;
       default:
-        <Intro></Intro>
+        return (<Intro></Intro>);
         break;
     }
   }

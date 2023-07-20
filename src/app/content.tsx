@@ -8,16 +8,11 @@ export function Content(props:{content:number, setContent:Dispatch<SetStateActio
     switch(content) {
       case 1:
         return (<Intro></Intro>);
-        break;
       case 2:
         return (
-          <div>
             <Login></Login>
-          </div>
         );
-        break;
       default:
         return (<Intro></Intro>);
-        break;
     }
   }

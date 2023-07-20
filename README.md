@@ -32,3 +32,30 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+# 图灵杯前端项目说明
+## 开发环境准备
+```
+node.js 18.17.0
+```
+
+## 查看效果
+在终端切换到项目更目录执行
+```powershell
+npx next dev
+```
+然后在主流浏览器中访问`http://localhost:3000`
+
+## Todo
+- [ ] 主页
+- [ ] 登录
+- [ ] 注册
+- [ ] 用户详细信息
+- [ ] 比赛列表
+#### 比赛
+ - [ ] 报名
+ - [ ] 组队
+ - [ ] 比赛详细信息
+ - [ ] 比赛进度
+ - [ ] 比赛文档
+ - [ ] 文件提交

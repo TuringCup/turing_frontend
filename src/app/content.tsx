@@ -7,11 +7,17 @@ export function Content(props:{content:number, setContent:Dispatch<SetStateActio
     let setContent = props.setContent;
     switch(content) {
       case 1:
-        return (<Intro></Intro>);
+        return (
+          <Intro></Intro>
+        );
       case 2:
         return (
-            <Login></Login>
+          <Login></Login>
         );
+      case 3:
+        return (
+          <>注册</>
+        )
       default:
         return (<Intro></Intro>);
     }

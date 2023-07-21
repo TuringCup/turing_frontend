@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        
+        {
+            "type": "command",
+            "name": "Command configuration",
+            "program": "D:/nodejs/npx.cmd",
+            "args": ["next", "dev"],
+        },
+        
+        
+        
+    ]
+}

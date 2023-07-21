@@ -7,7 +7,6 @@ import {
   Button,
   Select,
   FormHelperText,
-  SelectChangeEvent,
   MenuItem,
   FormControl, InputLabel,
   TextField,
@@ -154,7 +153,7 @@ const RegisterForm = () => {
   const inputUserName = <FormControl sx={{ m: 1, minWidth: "24rem" }}>
     <TextField
       id={"username"} required
-      label={"用户名"} variant="outlined"
+      label={config.register.UserName} variant="outlined"
     ></TextField>
   </FormControl>
 
@@ -163,11 +162,11 @@ const RegisterForm = () => {
       id={"password"}
       error={!checkPwdValidation()}
       required
-      label={"密码"}
+      label={config.register.Password}
       variant={"outlined"}
       type={"password"}
       onChange={handleChange(setPassword)}
-      helperText={"至少一个数字和一个小写字母和一个大写字母"}
+      helperText={config.register.PasswordHelperText}
     >
     </TextField>
   </FormControl>
@@ -175,7 +174,7 @@ const RegisterForm = () => {
   const inputEmail = <FormControl sx={{ m: 1, minWidth: "24rem" }}>
     <TextField
       id={"email"} required
-      label={"邮箱"} variant={"outlined"}
+      label={config.register.Email} variant={"outlined"}
       type={"email"}
       onChange={handleChange(setEmail)}
     >

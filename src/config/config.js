@@ -10,7 +10,10 @@ const config = {
         SelectCityHelperText: "选择学校所在城市",
         SelectSchool: "学校",
         SelectSchoolHelperText: "选择你所就读的学校",
-        UserName: "用户名"
+        UserName: "用户名",
+        Email: "邮箱",
+        PasswordHelperText: "至少一个数字和一个小写字母和一个大写字母",
+        Password: "密码"
     }
 };
 

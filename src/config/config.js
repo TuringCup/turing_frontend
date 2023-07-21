@@ -9,7 +9,8 @@ const config = {
         SelectCity: "城市",
         SelectCityHelperText: "选择学校所在城市",
         SelectSchool: "学校",
-        SelectSchoolHelperText: "选择你所就读的学校"
+        SelectSchoolHelperText: "选择你所就读的学校",
+        UserName: "用户名"
     }
 };
 

@@ -11,9 +11,11 @@ import {
   FormControl, InputLabel,
   TextField,
   Typography,
+  Alert,
 } from "@mui/material";
 import { config } from "@/config/config";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Paper = styled(MuiPaper)({
   minWidth: "50rem",
@@ -51,6 +53,7 @@ interface SchoolData {
 }
 
 const RegisterForm = () => {
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("")
   const [province, setProvince] = useState<string>('');
@@ -59,6 +62,8 @@ const RegisterForm = () => {
   const [provinceData, setProvinceData] = useState<ProvinceData[]>([]);
   const [cityData, setCityData] = useState<CityData[][]>([[]]);
   const [schoolData, setSchoolData] = useState<SchoolData[]>([]);
+  const [registerSuccess, setRegisterSuccess] = useState(false);
+  const [registerFailed, setRegisterFailed] = useState(false);
 
   useEffect(() => {
     import("./schoolData").then(({ provinceData, cityData, schoolData }) => {
@@ -70,6 +75,35 @@ const RegisterForm = () => {
       setSchoolData(schoolData as SchoolData[]);
     })
   })
+  const checkPwdValidation = () => {
+    if (password.length < 8) return false;
+    if (
+      !/[0-9]/.test(password) ||
+      !/[a-z]/.test(password) ||
+      !/[A-Z]/.test(password)
+    ) return false;
+    return true;
+  }
+  const checkUserNameValidation = () => {
+    if (username.length < 4 || username.length > 16) {
+      return false;
+    }
+    // 字符限制，只允许字母、数字、下划线
+    var reg = /^[a-zA-Z0-9_]+$/;
+    if (!reg.test(username)) {
+      return false;
+    }
+    // 空格限制
+    if (/\s/.test(username)) {
+      return false;
+    }
+    // 敏感词限制，这里假设不允许包含 admin、root 等词汇
+    if (username.indexOf('admin') >= 0 || username.indexOf('root') >= 0) {
+      return false;
+    }
+    return true;
+
+  }
   const handleChange = (callback: any) => (event: { target: { value: any; }; }) => {
     callback(event.target.value);
   };
@@ -82,21 +116,14 @@ const RegisterForm = () => {
     setSchool("");
     callback(event.target.value);
   }
-  const checkPwdValidation = () => {
-    if (password.length < 8) return false;
-    if (
-      !/[0-9]/.test(password) ||
-      !/[a-z]/.test(password) ||
-      !/[A-Z]/.test(password)
-    ) return false;
-    return true;
-  }
 
   const selectProvince = <FormControl sx={{ m: 1, minWidth: "24rem" }}>
-    <InputLabel id={"select-province-label"} htmlFor={"select-province"}>
+    <InputLabel id={"select-province-label"} htmlFor={"select-province"} required>
       {config.register.SelectProvince}
     </InputLabel>
     <Select
+      error={province===""}
+      required
       value={province}
       labelId={"select-province-label"}
       id={"select-province"}
@@ -112,10 +139,12 @@ const RegisterForm = () => {
 
   const selectCity = <FormControl sx={{ m: 1, minWidth: "24rem" }}>
 
-    <InputLabel id={"select-city-label"} htmlFor={"select-city"}>
+    <InputLabel id={"select-city-label"} htmlFor={"select-city"} required>
       {config.register.SelectCity}
     </InputLabel>
     <Select
+      error={city==""}
+      required
       value={city}
       labelId={"select-city-label"}
       id={"select-city"}
@@ -133,10 +162,11 @@ const RegisterForm = () => {
 
   const selectSchool = <FormControl sx={{ m: 1, minWidth: "24rem" }}>
 
-    <InputLabel id={"select-school-label"} htmlFor={"select-school"}>
+    <InputLabel id={"select-school-label"} htmlFor={"select-school"} required>
       {config.register.SelectSchool}
     </InputLabel>
     <Select
+      error={school==""}
       value={school}
       labelId={"select-school-label"}
       id={"select-school"}
@@ -152,8 +182,11 @@ const RegisterForm = () => {
 
   const inputUserName = <FormControl sx={{ m: 1, minWidth: "24rem" }}>
     <TextField
+      error={!checkUserNameValidation()}
       id={"username"} required
       label={config.register.UserName} variant="outlined"
+      onChange={handleChange(setUsername)}
+      helperText={config.register.UserNameHelperText}
     ></TextField>
   </FormControl>
 
@@ -173,6 +206,7 @@ const RegisterForm = () => {
 
   const inputEmail = <FormControl sx={{ m: 1, minWidth: "24rem" }}>
     <TextField
+      error={email===""}
       id={"email"} required
       label={config.register.Email} variant={"outlined"}
       type={"email"}
@@ -181,9 +215,38 @@ const RegisterForm = () => {
     </TextField>
   </FormControl>
 
+  // 处理注册
+  // 不是很懂不知道对不对
+  const handleSubmit = () => {
+    if (!checkUserNameValidation() || !checkPwdValidation()) {
+      setRegisterFailed(true);
+      return;
+    }
+    axios.post("/api/user/register", {
+      "username": username,
+      "password": password,
+      "email": email,
+      "province": province,
+      "city": city,
+      "school": school
+    }).then(response => {
+      setRegisterSuccess(true);
+    }, error => {
+      setRegisterFailed(true);
+    }
+    )
+  }
   const submitBtn = <FormControl sx={{ m: 1, minWidth: "12rem" }}>
-    <Button variant={"outlined"}> {config.register.Submit} </Button>
+    <Button variant={"outlined"} onClick={handleSubmit}> {config.register.Submit} </Button>
   </FormControl>
+  
+  // Todo: Use Snackbar
+  const successAlert = <Alert severity="success" onClose={() => { setRegisterSuccess(false) }}>
+    {config.register.RegisterSuccessText}
+  </Alert>
+  const failedAlert = <Alert severity="error" onClose={() => { setRegisterFailed(false) }}>
+    {config.register.RegisterFailedText}
+  </Alert>
 
   return <Box sx={divStyle}>
     <Paper elevation={24}>
@@ -195,6 +258,8 @@ const RegisterForm = () => {
       {province !== '' && cityData && cityData[Number(province)] && selectCity}
       {city !== '' && schoolData && selectSchool}
       {submitBtn}
+      {registerSuccess && successAlert}
+      {registerFailed && failedAlert}
     </Paper>
   </Box>;
 };

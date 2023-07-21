@@ -13,7 +13,10 @@ const config = {
         UserName: "用户名",
         Email: "邮箱",
         PasswordHelperText: "至少一个数字和一个小写字母和一个大写字母",
-        Password: "密码"
+        Password: "密码",
+        UserNameHelperText: "4-16个字符且只允许字母、数字、下划线且不存在敏感词",
+        RegisterSuccessText: "注册成功",
+        RegisterFailedText: "注册失败",
     }
 };
 

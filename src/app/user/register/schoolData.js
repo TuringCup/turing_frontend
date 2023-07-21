@@ -3131,11 +3131,11 @@ const schoolData=[{
 }, {
     "province": "江苏省",
     "city": "南京市",
-    "name": "南京航空航天大学"
+    "name": "南京理工大学"
 }, {
     "province": "江苏省",
     "city": "南京市",
-    "name": "南京理工大学"
+    "name": "南京航空航天大学"
 }, {
     "province": "江苏省",
     "city": "镇江市",

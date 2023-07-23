@@ -10,10 +10,10 @@ interface ContentProps{
 }
 
 export function Content({elements}: ContentProps) {
-
-    return <WithTheme theme={theme}>
+    const [login, setLogin] = useState(false);
+    return  <WithTheme theme={theme}>
         <Experimental_CssVarsProvider>
-            <AppBar title={config.AppBarText} />
+            <AppBar title={config.appbar.Title} login={login}/>
             <Paper sx={{ display:"flex", padding: "1rem", width:"100%", height:"calc( 100% - 64px )", borderRadius: 0}}>
                 {elements}
             </Paper>

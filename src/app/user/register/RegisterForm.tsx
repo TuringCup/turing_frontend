@@ -23,7 +23,9 @@ const Paper = styled(MuiPaper)({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  padding: "1em"
+  padding: "1em",
+  justifyContent: "center",
+  borderRadius: "1rem",
 });
 
 const divStyle = {
@@ -33,7 +35,7 @@ const divStyle = {
   flexWrap: "wrap",
   alignContent: "center",
   justifyContent: "center",
-  alignItems: "center"
+  alignItems: "center",
 };
 
 interface ProvinceData {
@@ -64,8 +66,11 @@ const RegisterForm = () => {
   const [schoolData, setSchoolData] = useState<SchoolData[]>([]);
   const [registerSuccess, setRegisterSuccess] = useState(false);
   const [registerFailed, setRegisterFailed] = useState(false);
+  const [changed, setChanged] = useState(false);
 
   useEffect(() => {
+    if(registerFailed)
+      setChanged(true);
     import("./schoolData").then(({ provinceData, cityData, schoolData }) => {
       // @ts-ignore
       setProvinceData(provinceData as ProvinceData[]);
@@ -106,15 +111,18 @@ const RegisterForm = () => {
   }
   const handleChange = (callback: any) => (event: { target: { value: any; }; }) => {
     callback(event.target.value);
+    setChanged(true);
   };
   const handleProvinceChange = (callback: any) => (event: { target: { value: any; }; }) => {
     setCity("");
     setSchool("");
     callback(event.target.value);
+    setChanged(true);
   }
   const handleCityChange = (callback: any) => (event: { target: { value: any; }; }) => {
     setSchool("");
     callback(event.target.value);
+    setChanged(true);
   }
 
   const selectProvince = <FormControl sx={{ m: 1, minWidth: "24rem" }}>
@@ -122,7 +130,7 @@ const RegisterForm = () => {
       {config.register.SelectProvince}
     </InputLabel>
     <Select
-      error={province === ""}
+      error={changed && province === ""}
       required
       value={province}
       labelId={"select-province-label"}
@@ -143,7 +151,7 @@ const RegisterForm = () => {
       {config.register.SelectCity}
     </InputLabel>
     <Select
-      error={city == ""}
+      error={changed && city == ""}
       required
       value={city}
       labelId={"select-city-label"}
@@ -166,7 +174,7 @@ const RegisterForm = () => {
       {config.register.SelectSchool}
     </InputLabel>
     <Select
-      error={school == ""}
+      error={changed && school == ""}
       value={school}
       labelId={"select-school-label"}
       id={"select-school"}
@@ -182,7 +190,7 @@ const RegisterForm = () => {
 
   const inputUserName = <FormControl sx={{ m: 1, minWidth: "24rem" }}>
     <TextField
-      error={!checkUserNameValidation()}
+      error={changed && !checkUserNameValidation()}
       id={"username"} required
       label={config.register.UserName} variant="outlined"
       onChange={handleChange(setUsername)}
@@ -193,7 +201,7 @@ const RegisterForm = () => {
   const inputPwd = <FormControl sx={{ m: 1, minWidth: "24rem" }}>
     <TextField
       id={"password"}
-      error={!checkPwdValidation()}
+      error={changed && !checkPwdValidation()}
       required
       label={config.register.Password}
       variant={"outlined"}
@@ -206,7 +214,7 @@ const RegisterForm = () => {
 
   const inputEmail = <FormControl sx={{ m: 1, minWidth: "24rem" }}>
     <TextField
-      error={email === ""}
+      error={changed && email === ""}
       id={"email"} required
       label={config.register.Email} variant={"outlined"}
       type={"email"}

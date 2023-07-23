@@ -1,7 +1,14 @@
 const config = {
-    title: "图灵杯",
-    description: "图灵杯官网",
-    AppBarText: "图灵杯官网",
+    Title: "图灵杯",
+    Description: "图灵杯官网",
+    appbar:{
+        Title: "图灵杯官网",
+        ProfileTooltip: "用户",
+        profile_menu:{
+            Register: "注册",
+            Login: "登陆",
+        }
+    },
     register:{
         Submit: "提交",
         SelectProvince: "省份",

@@ -8,8 +8,8 @@ import {Content} from "@/app/Content";
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: config.title,
-  description: config.description,
+  title: config.Title,
+  description: config.Description,
 }
 
 

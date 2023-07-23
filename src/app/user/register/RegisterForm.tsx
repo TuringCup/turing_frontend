@@ -122,7 +122,7 @@ const RegisterForm = () => {
       {config.register.SelectProvince}
     </InputLabel>
     <Select
-      error={province===""}
+      error={province === ""}
       required
       value={province}
       labelId={"select-province-label"}
@@ -143,7 +143,7 @@ const RegisterForm = () => {
       {config.register.SelectCity}
     </InputLabel>
     <Select
-      error={city==""}
+      error={city == ""}
       required
       value={city}
       labelId={"select-city-label"}
@@ -166,7 +166,7 @@ const RegisterForm = () => {
       {config.register.SelectSchool}
     </InputLabel>
     <Select
-      error={school==""}
+      error={school == ""}
       value={school}
       labelId={"select-school-label"}
       id={"select-school"}
@@ -206,7 +206,7 @@ const RegisterForm = () => {
 
   const inputEmail = <FormControl sx={{ m: 1, minWidth: "24rem" }}>
     <TextField
-      error={email===""}
+      error={email === ""}
       id={"email"} required
       label={config.register.Email} variant={"outlined"}
       type={"email"}
@@ -230,6 +230,11 @@ const RegisterForm = () => {
       "city": city,
       "school": school
     }).then(response => {
+      console.log(response.data);
+      console.log(response.status);
+      console.log(response.statusText);
+      console.log(response.headers);
+      console.log(response.config);
       setRegisterSuccess(true);
     }, error => {
       setRegisterFailed(true);
@@ -239,7 +244,7 @@ const RegisterForm = () => {
   const submitBtn = <FormControl sx={{ m: 1, minWidth: "12rem" }}>
     <Button variant={"outlined"} onClick={handleSubmit}> {config.register.Submit} </Button>
   </FormControl>
-  
+
   // Todo: Use Snackbar
   const successAlert = <Alert severity="success" onClose={() => { setRegisterSuccess(false) }}>
     {config.register.RegisterSuccessText}

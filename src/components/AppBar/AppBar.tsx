@@ -38,11 +38,11 @@ const menu_items = [
 const genMenuItems = (login: boolean) => {
     return menu_items.filter(v => v.login == login).map(
         (value, index) =>
-            <MenuItem key={index}>
-                <Link href={value.link}>
-                    <Typography>{value.name}</Typography>
-                </Link>
-            </MenuItem>
+            <Link href={value.link} key={index}>
+                <MenuItem>
+                        <Typography sx={{minWidth: "4rem", textAlign: "center"}}>{value.name}</Typography>
+                </MenuItem>
+            </Link>
     );
 }
 

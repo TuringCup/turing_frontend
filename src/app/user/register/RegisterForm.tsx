@@ -217,16 +217,16 @@ const RegisterForm = () => {
             </FormHelperText>
         </FormControl>
     );
-    
+
     const inputSchoolID = (
-      <FormControl sx={{ m: 1, minWidth: "24rem" }}>
-        <TextField
-          id={"schoolid"}
-          required
-          label={config.register.SchoolID}
-          variant="outlined"
-        ></TextField>
-      </FormControl>
+        <FormControl sx={{ m: 1, minWidth: "24rem" }}>
+            <TextField
+                id={"schoolid"}
+                required
+                label={config.register.SchoolID}
+                variant="outlined"
+            ></TextField>
+        </FormControl>
     )
 
     const inputUserName = (
@@ -273,14 +273,14 @@ const RegisterForm = () => {
     );
 
     const inputPhone = (
-      <FormControl sx={{ m: 1, minWidth: "24rem" }}>
-        <TextField
-          id={"phone"}
-          required
-          label={config.register.Phone}
-          variant={"outlined"}
-        ></TextField>
-      </FormControl>
+        <FormControl sx={{ m: 1, minWidth: "24rem" }}>
+            <TextField
+                id={"phone"}
+                required
+                label={config.register.Phone}
+                variant={"outlined"}
+            ></TextField>
+        </FormControl>
     )
 
     // 处理注册

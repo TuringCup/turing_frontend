@@ -272,6 +272,17 @@ const RegisterForm = () => {
         </FormControl>
     );
 
+    const inputPhone = (
+      <FormControl sx={{ m: 1, minWidth: "24rem" }}>
+        <TextField
+          id={"phone"}
+          required
+          label={config.register.Phone}
+          variant={"outlined"}
+        ></TextField>
+      </FormControl>
+    )
+
     // 处理注册
     // 不是很懂不知道对不对
     const handleSubmit = () => {
@@ -342,6 +353,7 @@ const RegisterForm = () => {
                 {inputUserName}
                 {inputPwd}
                 {inputEmail}
+                {inputPhone}
                 {selectProvince}
                 {province !== "" &&
                     cityData &&

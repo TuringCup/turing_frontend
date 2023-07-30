@@ -217,6 +217,17 @@ const RegisterForm = () => {
             </FormHelperText>
         </FormControl>
     );
+    
+    const inputSchoolID = (
+      <FormControl sx={{ m: 1, minWidth: "24rem" }}>
+        <TextField
+          id={"schoolid"}
+          required
+          label={config.register.SchoolID}
+          variant="outlined"
+        ></TextField>
+      </FormControl>
+    )
 
     const inputUserName = (
         <FormControl sx={{ m: 1, minWidth: "24rem" }}>
@@ -337,6 +348,7 @@ const RegisterForm = () => {
                     cityData[Number(province)] &&
                     selectCity}
                 {city !== "" && schoolData && selectSchool}
+                {school !== "" && inputSchoolID}
                 {submitBtn}
                 {registerSuccess && successAlert}
                 {registerFailed && failedAlert}

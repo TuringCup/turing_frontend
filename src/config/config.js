@@ -24,6 +24,14 @@ const config = {
         UserNameHelperText: "4-16个字符且只允许字母、数字、下划线且不存在敏感词",
         RegisterSuccessText: "注册成功",
         RegisterFailedText: "注册失败",
+    },
+    login:{
+        LoginText: "登陆",
+        UserName: "用户名",
+        Password: "密码",
+        Submit: "登陆",
+        LoginSuccessText: "登陆成功",
+        LoginFailedText: "登录失败",
     }
 };
 

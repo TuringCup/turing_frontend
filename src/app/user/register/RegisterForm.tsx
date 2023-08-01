@@ -82,32 +82,8 @@ const RegisterForm = () => {
             }
         );
     }, [registerFailed]);
-    const checkPwdValidation = () => {
-        if (password.length < 8) return false;
-        return !(
-            !/[0-9]/.test(password) ||
-            !/[a-z]/.test(password) ||
-            !/[A-Z]/.test(password)
-        );
-    };
-    const checkUserNameValidation = () => {
-        if (username.length < 4 || username.length > 16) {
-            return false;
-        }
-        // 字符限制，只允许字母、数字、下划线
-        const reg = /^[a-zA-Z0-9_]+$/;
-        if (!reg.test(username)) {
-            return false;
-        }
-        // 空格限制
-        if (/\s/.test(username)) {
-            return false;
-        }
-        // 敏感词限制，这里假设不允许包含 admin、root 等词汇
-        return !(
-            username.indexOf("admin") >= 0 || username.indexOf("root") >= 0
-        );
-    };
+
+
     const handleChange =
         (callback: any) => (event: { target: { value: any } }) => {
             callback(event.target.value);
@@ -221,7 +197,7 @@ const RegisterForm = () => {
     const inputUserName = (
         <FormControl sx={{ m: 1, minWidth: "24rem" }}>
             <TextField
-                error={changed && !checkUserNameValidation()}
+                error={changed && !checkUserNameValidation(username)}
                 id={"username"}
                 required
                 label={config.register.UserName}
@@ -236,7 +212,7 @@ const RegisterForm = () => {
         <FormControl sx={{ m: 1, minWidth: "24rem" }}>
             <TextField
                 id={"password"}
-                error={changed && !checkPwdValidation()}
+                error={changed && !checkPwdValidation(password)}
                 required
                 label={config.register.Password}
                 variant={"outlined"}
@@ -264,7 +240,7 @@ const RegisterForm = () => {
     // 处理注册
     // 不是很懂不知道对不对
     const handleSubmit = () => {
-        if (!checkUserNameValidation() || !checkPwdValidation()) {
+        if (!checkUserNameValidation(username) || !checkPwdValidation(password)) {
             setRegisterFailed(true);
             return;
         }
@@ -346,3 +322,32 @@ const RegisterForm = () => {
 };
 
 export { RegisterForm };
+
+
+const checkUserNameValidation = (username: string) => {
+    if (username.length < 4 || username.length > 16) {
+        return false;
+    }
+    // 字符限制，只允许字母、数字、下划线
+    const reg = /^[a-zA-Z0-9_]+$/;
+    if (!reg.test(username)) {
+        return false;
+    }
+    // 空格限制
+    if (/\s/.test(username)) {
+        return false;
+    }
+    // 敏感词限制，这里假设不允许包含 admin、root 等词汇
+    return !(
+        username.indexOf("admin") >= 0 || username.indexOf("root") >= 0
+    );
+};
+
+const checkPwdValidation = (password: string) => {
+    if (password.length < 8) return false;
+    return !(
+        !/[0-9]/.test(password) ||
+        !/[a-z]/.test(password) ||
+        !/[A-Z]/.test(password)
+    );
+};

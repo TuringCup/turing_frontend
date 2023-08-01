@@ -218,6 +218,17 @@ const RegisterForm = () => {
         </FormControl>
     );
 
+    const inputSchoolID = (
+        <FormControl sx={{ m: 1, minWidth: "24rem" }}>
+            <TextField
+                id={"schoolid"}
+                required
+                label={config.register.SchoolID}
+                variant="outlined"
+            ></TextField>
+        </FormControl>
+    )
+
     const inputUserName = (
         <FormControl sx={{ m: 1, minWidth: "24rem" }}>
             <TextField
@@ -260,6 +271,17 @@ const RegisterForm = () => {
             ></TextField>
         </FormControl>
     );
+
+    const inputPhone = (
+        <FormControl sx={{ m: 1, minWidth: "24rem" }}>
+            <TextField
+                id={"phone"}
+                required
+                label={config.register.Phone}
+                variant={"outlined"}
+            ></TextField>
+        </FormControl>
+    )
 
     // 处理注册
     // 不是很懂不知道对不对
@@ -331,12 +353,14 @@ const RegisterForm = () => {
                 {inputUserName}
                 {inputPwd}
                 {inputEmail}
+                {inputPhone}
                 {selectProvince}
                 {province !== "" &&
                     cityData &&
                     cityData[Number(province)] &&
                     selectCity}
                 {city !== "" && schoolData && selectSchool}
+                {school !== "" && inputSchoolID}
                 {submitBtn}
                 {registerSuccess && successAlert}
                 {registerFailed && failedAlert}

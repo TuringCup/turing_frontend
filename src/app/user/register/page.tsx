@@ -15,12 +15,12 @@ import {
     Alert,
 } from "@mui/material";
 import { config } from "@/config/config";
-import { useEffect, useState } from "react";
+import {CSSProperties, useEffect, useState} from "react";
 import axios from "axios";
 
 const Paper = styled(MuiPaper)({
     minWidth: "50rem",
-    minHeight: "40rem",
+    minHeight: "36rem",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -32,12 +32,12 @@ const Paper = styled(MuiPaper)({
 const divStyle = {
     display: "flex",
     flexGrow: 1,
-    flexDirection: "row",
+    flexDirection: "column",
     flexWrap: "wrap",
     alignContent: "center",
     justifyContent: "center",
     alignItems: "center",
-};
+} as CSSProperties;
 
 interface ProvinceData {
     label: string;
@@ -128,7 +128,7 @@ const Page = () => {
         };
 
     const selectProvince = (
-        <FormControl sx={{ m: 1, minWidth: "24rem" }}>
+        <FormControl sx={{ m: 0.5, minWidth: "24rem" }}>
             <InputLabel
                 id={"select-province-label"}
                 htmlFor={"select-province"}
@@ -158,7 +158,7 @@ const Page = () => {
     );
 
     const selectCity = (
-        <FormControl sx={{ m: 1, minWidth: "24rem" }}>
+        <FormControl sx={{ m: 0.5, minWidth: "24rem" }}>
             <InputLabel
                 id={"select-city-label"}
                 htmlFor={"select-city"}
@@ -188,7 +188,7 @@ const Page = () => {
     );
 
     const selectSchool = (
-        <FormControl sx={{ m: 1, minWidth: "24rem" }}>
+        <FormControl sx={{ m: 0.5, minWidth: "24rem" }}>
             <InputLabel
                 id={"select-school-label"}
                 htmlFor={"select-school"}
@@ -219,7 +219,7 @@ const Page = () => {
     );
 
     const inputSchoolID = (
-        <FormControl sx={{ m: 1, minWidth: "24rem" }}>
+        <FormControl sx={{ m: 0.5, minWidth: "24rem" }}>
             <TextField
                 id={"schoolid"}
                 required
@@ -230,7 +230,7 @@ const Page = () => {
     )
 
     const inputUserName = (
-        <FormControl sx={{ m: 1, minWidth: "24rem" }}>
+        <FormControl sx={{ m: 0.5, minWidth: "24rem" }}>
             <TextField
                 error={changed && !checkUserNameValidation()}
                 id={"username"}
@@ -244,7 +244,7 @@ const Page = () => {
     );
 
     const inputPwd = (
-        <FormControl sx={{ m: 1, minWidth: "24rem" }}>
+        <FormControl sx={{ m: 0.5, minWidth: "24rem" }}>
             <TextField
                 id={"password"}
                 error={changed && !checkPwdValidation()}
@@ -259,7 +259,7 @@ const Page = () => {
     );
 
     const inputEmail = (
-        <FormControl sx={{ m: 1, minWidth: "24rem" }}>
+        <FormControl sx={{ m: 0.5, minWidth: "24rem" }}>
             <TextField
                 error={changed && email === ""}
                 id={"email"}
@@ -273,7 +273,7 @@ const Page = () => {
     );
 
     const inputPhone = (
-        <FormControl sx={{ m: 1, minWidth: "24rem" }}>
+        <FormControl sx={{ m: 0.5, minWidth: "24rem" }}>
             <TextField
                 id={"phone"}
                 required
@@ -314,7 +314,7 @@ const Page = () => {
             );
     };
     const submitBtn = (
-        <FormControl sx={{ m: 1, minWidth: "12rem" }}>
+        <FormControl sx={{ m: 0.5, minWidth: "12rem" }}>
             <Button variant={"outlined"} onClick={handleSubmit}>
                 {" "}
                 {config.register.Submit}{" "}
@@ -350,17 +350,24 @@ const Page = () => {
                 <Typography variant={"h3"} gutterBottom>
                     注册
                 </Typography>
-                {inputUserName}
-                {inputPwd}
-                {inputEmail}
-                {inputPhone}
-                {selectProvince}
-                {province !== "" &&
-                    cityData &&
-                    cityData[Number(province)] &&
-                    selectCity}
-                {city !== "" && schoolData && selectSchool}
-                {school !== "" && inputSchoolID}
+                <Box sx={{ display: "flex", flexGrow: 1, flexDirection: "row", maxHeight: "22rem"}}>
+                    <Box sx={{ display: "flex", flexGrow: 1, flexDirection: "column", maxHeight: "22rem"}}>
+                        {inputUserName}
+                        {inputPwd}
+                        {inputEmail}
+                        {inputPhone}
+                    </Box>
+                    <Box sx={{ display: "flex", flexGrow: 1, flexDirection: "column", maxHeight: "22rem"}}>
+                        {selectProvince}
+                        {province !== "" &&
+                            cityData &&
+                            cityData[Number(province)] &&
+                            selectCity}
+                        {city !== "" && schoolData && selectSchool}
+                        {school !== "" && inputSchoolID}
+                    </Box>
+
+                </Box>
                 {submitBtn}
                 {registerSuccess && successAlert}
                 {registerFailed && failedAlert}

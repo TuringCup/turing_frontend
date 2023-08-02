@@ -68,6 +68,8 @@ const Page = () => {
     const [registerSuccess, setRegisterSuccess] = useState(false);
     const [registerFailed, setRegisterFailed] = useState(false);
     const [changed, setChanged] = useState(false);
+    const [phone, setPhone] = useState("");
+    const [schoolID, setSchoolID] = useState("");
 
     useEffect(() => {
         if (registerFailed) setChanged(true);
@@ -225,6 +227,7 @@ const Page = () => {
                 required
                 label={config.register.SchoolID}
                 variant="outlined"
+                onChange={handleChange(setSchoolID)}
             ></TextField>
         </FormControl>
     )
@@ -279,6 +282,7 @@ const Page = () => {
                 required
                 label={config.register.Phone}
                 variant={"outlined"}
+                onChange={handleChange(setPhone)}
             ></TextField>
         </FormControl>
     )

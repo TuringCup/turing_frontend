@@ -24,6 +24,8 @@ const config = {
         UserNameHelperText: "4-16个字符且只允许字母、数字、下划线且不存在敏感词",
         RegisterSuccessText: "注册成功",
         RegisterFailedText: "注册失败",
+        SchoolID: "本校学号",
+        Phone: "手机号"
     },
     login:{
         LoginText: "登陆",

@@ -26,6 +26,14 @@ const config = {
         RegisterFailedText: "注册失败",
         SchoolID: "本校学号",
         Phone: "手机号"
+    },
+    login:{
+        LoginText: "登陆",
+        UserName: "用户名",
+        Password: "密码",
+        Submit: "登陆",
+        LoginSuccessText: "登陆成功",
+        LoginFailedText: "登录失败",
     }
 };
 

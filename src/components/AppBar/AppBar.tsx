@@ -71,7 +71,7 @@ function AppBar({ title, login }: AppBarProps) {
                 {menuItems}
             </Menu>
         ),
-        [menuAnchor]
+        [menuAnchor, menuItems]
     );
 
     useEffect(() => {

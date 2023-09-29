@@ -269,6 +269,9 @@ const Page = () => {
                 type={"email"}
                 onChange={handleChange(setEmail)}
             ></TextField>
+            <FormHelperText>
+                {config.register.EmailHelperText}
+            </FormHelperText>
         </FormControl>
     );
 
@@ -280,6 +283,9 @@ const Page = () => {
                 label={config.register.Phone}
                 variant={"outlined"}
             ></TextField>
+            <FormHelperText>
+                {config.register.PhoneHelperText}
+            </FormHelperText>
         </FormControl>
     )
 

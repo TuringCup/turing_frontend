@@ -27,20 +27,19 @@ const divStyle = {
 };
 
 
-
 export default function Page() {
 
     const [changed, setChanged] = useState(false);
     const [usernameValue, setUserName] = useState("");
-    const [passwordValue,setPassWordValue]=useState("")
-    const onUserNameChanged = useCallback((event: ChangeEvent<HTMLInputElement>)=>{
+    const [passwordValue, setPassWordValue] = useState("")
+    const onUserNameChanged = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         setChanged(true);
         setUserName(event.target.value);
     }, []);
-    const onPasswordChanged = useCallback((event:ChangeEvent<HTMLInputElement>)=>{
+    const onPasswordChanged = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         setChanged(true);
         setPassWordValue(event.target.value);
-    },[]);
+    }, []);
     const userName = <FormControl sx={{m: 1, minWidth: "24rem"}}>
         <TextField
             error={changed && !validUsername(usernameValue)}
@@ -74,8 +73,15 @@ export default function Page() {
                 </Typography>
                 {userName}
                 {password}
-                <FormControl sx={{ m: 1, minWidth: "12rem" }}>
-                    <Button variant={"outlined"}>{config.login.Submit}</Button>
+                <FormControl sx={{m: 1, minWidth: "12rem"}}>
+                    <Button variant={"outlined"}
+                            size={"large"}>{config.login.Submit}
+                    </Button>
+                </FormControl>
+                <FormControl sx={{m: 1}}>
+                    <Button variant={"text"}
+                            size={"small"}>{config.login.Question}
+                    </Button>
                 </FormControl>
             </Paper>
         </Box>

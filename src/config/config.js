@@ -37,6 +37,9 @@ const config = {
         Submit: "登陆",
         LoginSuccessText: "登陆成功",
         LoginFailedText: "登录失败",
+    },
+    upload:{
+        Upload: "上传",
         Question: "没有账号? 注册",
     }
 };

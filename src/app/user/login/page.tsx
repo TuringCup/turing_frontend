@@ -3,6 +3,7 @@ import {Box, Button, FormControl, Paper as MuiPaper, TextField, Typography} from
 import {config} from "@/config/config";
 import styled from "@emotion/styled";
 import {ChangeEvent, useCallback, useState} from "react";
+import Link from "next/link";
 
 
 const Paper = styled(MuiPaper)({
@@ -27,20 +28,19 @@ const divStyle = {
 };
 
 
-
 export default function Page() {
 
     const [changed, setChanged] = useState(false);
     const [usernameValue, setUserName] = useState("");
-    const [passwordValue,setPassWordValue]=useState("")
-    const onUserNameChanged = useCallback((event: ChangeEvent<HTMLInputElement>)=>{
+    const [passwordValue, setPassWordValue] = useState("")
+    const onUserNameChanged = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         setChanged(true);
         setUserName(event.target.value);
     }, []);
-    const onPasswordChanged = useCallback((event:ChangeEvent<HTMLInputElement>)=>{
+    const onPasswordChanged = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         setChanged(true);
         setPassWordValue(event.target.value);
-    },[]);
+    }, []);
     const userName = <FormControl sx={{m: 1, minWidth: "24rem"}}>
         <TextField
             error={changed && !validUsername(usernameValue)}
@@ -67,19 +67,29 @@ export default function Page() {
         </TextField>
     </FormControl>
     return <>
-        <Box sx={divStyle}>
-            <Paper elevation={24}>
-                <Typography variant={"h3"} gutterBottom>
-                    {config.login.LoginText}
-                </Typography>
-                {userName}
-                {password}
-                <FormControl sx={{ m: 1, minWidth: "12rem" }}>
-                    <Button variant={"outlined"}>{config.login.Submit}</Button>
+    <Box sx={divStyle}>
+        <Paper elevation={24}>
+            <Typography variant={"h3"} gutterBottom>
+                {config.login.LoginText}
+            </Typography>
+            {userName}
+            {password}
+            <FormControl sx={{m: 1, minWidth: "12rem"}}>
+                <Button variant={"outlined"}
+                        size={"large"}>{config.login.Submit}
+                </Button>
+            </FormControl>
+            <Link href={"/user/register"}>
+                <FormControl sx={{m: 1}}>
+                    <Button variant={"text"}
+                            size={"small"}>{config.login.Question}
+                    </Button>
                 </FormControl>
-            </Paper>
-        </Box>
-    </>;
+            </Link>
+        </Paper>
+    </Box>
+</>
+    ;
 }
 
 // 校验用户名是否合法

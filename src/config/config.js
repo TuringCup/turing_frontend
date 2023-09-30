@@ -19,6 +19,7 @@ const config = {
         SelectSchoolHelperText: "选择你所就读的学校",
         UserName: "用户名",
         Email: "邮箱",
+        PasswordHelperText: "至少一个数字和一个小写字母和一个大写字母,长度至少为8",
         EmailHelperText: "你的常用邮箱",
         PasswordHelperText: "至少一个数字和一个小写字母和一个大写字母",
         Password: "密码",

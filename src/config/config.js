@@ -20,12 +20,15 @@ const config = {
         UserName: "用户名",
         Email: "邮箱",
         PasswordHelperText: "至少一个数字和一个小写字母和一个大写字母,长度至少为8",
+        EmailHelperText: "你的常用邮箱",
+        PasswordHelperText: "至少一个数字和一个小写字母和一个大写字母",
         Password: "密码",
         UserNameHelperText: "4-16个字符且只允许字母、数字、下划线且不存在敏感词",
         RegisterSuccessText: "注册成功",
         RegisterFailedText: "注册失败",
         SchoolID: "本校学号",
-        Phone: "手机号"
+        Phone: "手机号",
+        PhoneHelperText: "你的常用手机号"
     },
     login:{
         LoginText: "登陆",

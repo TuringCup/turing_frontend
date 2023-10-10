@@ -4,6 +4,15 @@ import {config} from "@/config/config";
 import styled from "@emotion/styled";
 import {ChangeEvent, useCallback, useState} from "react";
 import Link from "next/link";
+import {APIRequest, ResponseData} from "@/app/user/APIRequest";
+
+
+interface LoginResponse {
+    refreshToken: string;
+    statusCode: number;
+    statusMsg: string;
+    token: null | string;
+}
 
 
 const Paper = styled(MuiPaper)({
@@ -33,6 +42,7 @@ export default function Page() {
     const [changed, setChanged] = useState(false);
     const [usernameValue, setUserName] = useState("");
     const [passwordValue, setPassWordValue] = useState("")
+
     const onUserNameChanged = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         setChanged(true);
         setUserName(event.target.value);
@@ -41,6 +51,31 @@ export default function Page() {
         setChanged(true);
         setPassWordValue(event.target.value);
     }, []);
+
+    const on_login = useCallback((_: any) => {
+        fetch("/api/api-proxy",{
+            method: "POST",
+            body: JSON.stringify(
+                {
+                    path: "/api/user/login",
+                    method: "GET",
+                    data: {
+                        username: usernameValue,
+                        password: passwordValue,
+                    } as object
+                } as APIRequest
+            )
+        }).then(e => e.json() as Promise<ResponseData>)
+        .then(e => {
+            if(e.success){
+                let login_response = e.response as LoginResponse;
+                login_response.token
+            }else{
+                alert(e.response);
+            }
+        });
+    }, []);
+
     const userName = <FormControl sx={{m: 1, minWidth: "24rem"}}>
         <TextField
             error={changed && !validUsername(usernameValue)}
@@ -75,14 +110,21 @@ export default function Page() {
             {userName}
             {password}
             <FormControl sx={{m: 1, minWidth: "12rem"}}>
-                <Button variant={"outlined"}
-                        size={"large"}>{config.login.Submit}
+                <Button
+                    variant={"outlined"}
+                    size={"large"}
+                    onClick={on_login}
+                >
+                    {config.login.Submit}
                 </Button>
             </FormControl>
             <Link href={"/user/register"}>
                 <FormControl sx={{m: 1}}>
-                    <Button variant={"text"}
-                            size={"small"}>{config.login.Question}
+                    <Button
+                        variant={"text"}
+                            size={"small"}
+                    >
+                        {config.login.Question}
                     </Button>
                 </FormControl>
             </Link>

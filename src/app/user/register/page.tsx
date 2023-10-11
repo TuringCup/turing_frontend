@@ -15,8 +15,10 @@ import {
     Alert,
 } from "@mui/material";
 import { config } from "@/config/config";
-import {CSSProperties, useEffect, useState} from "react";
+import {CSSProperties, useCallback, useEffect, useState} from "react";
 import axios from "axios";
+import {api} from "@/app/user/api-request";
+import {redirect} from "next/navigation";
 
 const Paper = styled(MuiPaper)({
     minWidth: "50rem",
@@ -68,6 +70,8 @@ const Page = () => {
     const [registerSuccess, setRegisterSuccess] = useState(false);
     const [registerFailed, setRegisterFailed] = useState(false);
     const [changed, setChanged] = useState(false);
+    const [schoolId, setSchoolId] = useState("");
+    const [phone, setPhone] = useState("");
 
     useEffect(() => {
         if (registerFailed) setChanged(true);
@@ -225,6 +229,8 @@ const Page = () => {
                 required
                 label={config.register.SchoolID}
                 variant="outlined"
+                onChange={(e) => setSchoolId(e.target.value)}
+                value={schoolId}
             ></TextField>
         </FormControl>
     )
@@ -282,6 +288,8 @@ const Page = () => {
                 required
                 label={config.register.Phone}
                 variant={"outlined"}
+                value={phone}
+                onChange={e=> setPhone(e.target.value)}
             ></TextField>
             <FormHelperText>
                 {config.register.PhoneHelperText}
@@ -289,6 +297,12 @@ const Page = () => {
         </FormControl>
     )
 
+    const [register, setRegister] = useState({
+        submit: false,
+        errorMsg: "",
+        success: false,
+    });
+    
     // 处理注册
     // 不是很懂不知道对不对
     const handleSubmit = () => {
@@ -296,29 +310,44 @@ const Page = () => {
             setRegisterFailed(true);
             return;
         }
-        axios
-            .post("/api/user/register", {
-                username: username,
-                password: password,
-                email: email,
-                province: province,
-                city: city,
-                school: school,
-            })
-            .then(
-                (response) => {
-                    console.log(response.data);
-                    console.log(response.status);
-                    console.log(response.statusText);
-                    console.log(response.headers);
-                    console.log(response.config);
-                    setRegisterSuccess(true);
-                },
-                (_) => {
-                    setRegisterFailed(true);
-                }
-            );
+        api.i++;
+        setRegister({...register, submit: true, errorMsg: "", success: false})
     };
+
+    let {data, error, isLoading} = api.useRegister(register.submit, {
+        username,
+        password,
+        city,
+        email,
+        school,
+        schoolId,
+        phone,
+        province
+    })
+
+    if (!error && data) {
+        setRegister({...register, submit: false, success: true});
+    }
+    
+    if (error && register.submit) {
+        setRegister({...register, submit: false, errorMsg: error, success: false});
+    }
+
+    let status = <>
+        {
+            (() => {
+                if (isLoading) {
+                    return <Alert severity={"warning"}>正在注册...</Alert>;
+                }
+
+                if (register.errorMsg) {
+                    return <Alert severity={"error"}>{register.errorMsg}</Alert>;
+                }
+
+                return register.success? <Alert severity={"success"}>{config.register.RegisterSuccessText}</Alert> : ""
+            })()
+        }
+    </>;
     const submitBtn = (
         <FormControl sx={{ m: 0.5, minWidth: "12rem" }}>
             <Button variant={"outlined"} onClick={handleSubmit}>
@@ -326,28 +355,6 @@ const Page = () => {
                 {config.register.Submit}{" "}
             </Button>
         </FormControl>
-    );
-
-    // Todo: Use Snackbar
-    const successAlert = (
-        <Alert
-            severity="success"
-            onClose={() => {
-                setRegisterSuccess(false);
-            }}
-        >
-            {config.register.RegisterSuccessText}
-        </Alert>
-    );
-    const failedAlert = (
-        <Alert
-            severity="error"
-            onClose={() => {
-                setRegisterFailed(false);
-            }}
-        >
-            {config.register.RegisterFailedText}
-        </Alert>
     );
 
     return (
@@ -375,8 +382,7 @@ const Page = () => {
 
                 </Box>
                 {submitBtn}
-                {registerSuccess && successAlert}
-                {registerFailed && failedAlert}
+                {status}
             </Paper>
         </Box>
     );

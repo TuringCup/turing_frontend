@@ -1,18 +1,11 @@
 "use client";
-import {Box, Button, FormControl, Paper as MuiPaper, TextField, Typography} from "@mui/material";
+import {Alert, Box, Button, FormControl, Paper as MuiPaper, TextField, Typography} from "@mui/material";
 import {config} from "@/config/config";
 import styled from "@emotion/styled";
-import {ChangeEvent, useCallback, useState} from "react";
+import {ChangeEvent, useCallback, useEffect, useState} from "react";
 import Link from "next/link";
-import {APIRequest, ResponseData} from "@/app/user/APIRequest";
-
-
-interface LoginResponse {
-    refreshToken: string;
-    statusCode: number;
-    statusMsg: string;
-    token: null | string;
-}
+import {api} from "@/app/user/api-request";
+import {redirect} from "next/navigation";
 
 
 const Paper = styled(MuiPaper)({
@@ -38,6 +31,9 @@ const divStyle = {
 
 
 export default function Page() {
+    useEffect(() => {
+        document.cookie = "";
+    }, []);
 
     const [changed, setChanged] = useState(false);
     const [usernameValue, setUserName] = useState("");
@@ -47,34 +43,57 @@ export default function Page() {
         setChanged(true);
         setUserName(event.target.value);
     }, []);
+
     const onPasswordChanged = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         setChanged(true);
         setPassWordValue(event.target.value);
     }, []);
 
-    const on_login = useCallback((_: any) => {
-        fetch("/api/api-proxy",{
-            method: "POST",
-            body: JSON.stringify(
-                {
-                    path: "/api/user/login",
-                    method: "GET",
-                    data: {
-                        username: usernameValue,
-                        password: passwordValue,
-                    } as object
-                } as APIRequest
-            )
-        }).then(e => e.json() as Promise<ResponseData>)
-        .then(e => {
-            if(e.success){
-                let login_response = e.response as LoginResponse;
-                login_response.token
-            }else{
-                alert(e.response);
-            }
-        });
-    }, []);
+    const [login, setLogin] = useState({
+        submit: false,
+        errorMsg: "",
+    });
+
+
+    let {data, error, isLoading} = api.useLogin(login.submit, {
+        username: usernameValue,
+        password: passwordValue
+    })
+
+    if (!error && data) {
+        if(data.token){
+            document.cookie = "token=" + data.token + ";path=/";
+            redirect("/")
+        }else{
+            error = "没得到Token，请联系开发者";
+        }
+        setLogin({...login, submit: false});
+    }
+
+    const onLogin = useCallback((_: any) => {
+        api.i++;
+        setLogin({...login, submit: true, errorMsg: ""})
+    }, [login]);
+
+    if (error && login.submit) {
+        setLogin({...login, submit: false, errorMsg: error});
+    }
+
+    let status = <>
+        {
+            (() => {
+                if (isLoading) {
+                    return <Alert severity={"warning"}>正在登录...</Alert>;
+                }
+
+                if (login.errorMsg) {
+                    return <Alert severity={"error"}>{login.errorMsg}</Alert>;
+                }
+
+                return ""
+            })()
+        }
+    </>;
 
     const userName = <FormControl sx={{m: 1, minWidth: "24rem"}}>
         <TextField
@@ -102,36 +121,37 @@ export default function Page() {
         </TextField>
     </FormControl>
     return <>
-    <Box sx={divStyle}>
-        <Paper elevation={24}>
-            <Typography variant={"h3"} gutterBottom>
-                {config.login.LoginText}
-            </Typography>
-            {userName}
-            {password}
-            <FormControl sx={{m: 1, minWidth: "12rem"}}>
-                <Button
-                    variant={"outlined"}
-                    size={"large"}
-                    onClick={on_login}
-                >
-                    {config.login.Submit}
-                </Button>
-            </FormControl>
-            <Link href={"/user/register"}>
-                <FormControl sx={{m: 1}}>
+        <Box sx={divStyle}>
+            <Paper elevation={24}>
+                <Typography variant={"h3"} gutterBottom>
+                    {config.login.LoginText}
+                </Typography>
+                {userName}
+                {password}
+                <FormControl sx={{m: 1, minWidth: "12rem"}}>
                     <Button
-                        variant={"text"}
-                            size={"small"}
+                        variant={"outlined"}
+                        size={"large"}
+                        onClick={onLogin}
                     >
-                        {config.login.Question}
+                        {config.login.Submit}
                     </Button>
                 </FormControl>
-            </Link>
-        </Paper>
-    </Box>
-</>
-    ;
+                <Link href={"/user/register"}>
+                    <FormControl sx={{m: 1}}>
+                        <Button
+                            variant={"text"}
+                            size={"small"}
+                        >
+                            {config.login.Question}
+                        </Button>
+                    </FormControl>
+                </Link>
+                {status}
+            </Paper>
+        </Box>
+    </>
+        ;
 }
 
 // 校验用户名是否合法

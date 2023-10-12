@@ -21,7 +21,6 @@ const config = {
         Email: "邮箱",
         PasswordHelperText: "至少一个数字和一个小写字母和一个大写字母,长度至少为8",
         EmailHelperText: "你的常用邮箱",
-        PasswordHelperText: "至少一个数字和一个小写字母和一个大写字母",
         Password: "密码",
         UserNameHelperText: "4-16个字符且只允许字母、数字、下划线且不存在敏感词",
         RegisterSuccessText: "注册成功",
@@ -36,11 +35,11 @@ const config = {
         Password: "密码",
         Submit: "登陆",
         LoginSuccessText: "登陆成功",
+        Question: "没有账号? 注册",
         LoginFailedText: "登录失败",
     },
     upload:{
         Upload: "上传",
-        Question: "没有账号? 注册",
     }
 };
 

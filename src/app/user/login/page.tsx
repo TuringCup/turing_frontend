@@ -31,9 +31,9 @@ const divStyle = {
 
 
 export default function Page() {
-    useEffect(() => {
-        document.cookie = "";
-    }, []);
+    // useEffect(() => {
+    //     document.cookie = "";
+    // }, []);
 
     const [changed, setChanged] = useState(false);
     const [usernameValue, setUserName] = useState("");

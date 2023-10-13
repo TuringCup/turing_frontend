@@ -40,6 +40,7 @@ const config = {
     },
     upload:{
         Upload: "上传",
+        UploadConfirm: "您确认要上传{}吗?"
     }
 };
 

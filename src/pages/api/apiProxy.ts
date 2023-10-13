@@ -9,7 +9,8 @@ type ResponseData = {
 const allow_paths = [
     "/api/user/register",
     "/api/user/login",
-    "/api/user/upload"
+    "/api/user/upload",
+    "/api/validtoken"
 ]
 
 const host = "http://49.234.15.205:5001";
@@ -53,9 +54,10 @@ export default async function handler(
             for(let i in request.data as any){
                 formData.append(i, (request.data as any)[i])
             }
+        console.log(request)
         let data = await axios.request({
             url: `${host}${request.path}`,
-            method: request.method?.toLowerCase(),
+            method: request.method?.toUpperCase(),
             data: formData,
         });
         let api_data = await data.data as object;
@@ -70,3 +72,4 @@ export default async function handler(
         })
     }
 }
+

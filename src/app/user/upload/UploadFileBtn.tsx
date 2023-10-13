@@ -2,6 +2,7 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import {ChangeEvent} from "react";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -17,14 +18,14 @@ const VisuallyHiddenInput = styled('input')({
 
 interface UploadFileBtnPops{
     text: string,
-
+    onChange: (e: ChangeEvent<HTMLInputElement>)=>void
 }
 
-export default React.forwardRef(function UploadFileBtn({ text }: UploadFileBtnPops, ref: React.Ref<HTMLInputElement>) {
+export default React.forwardRef(function UploadFileBtn({ text, onChange }: UploadFileBtnPops, ref: React.Ref<HTMLInputElement>) {
     return (
         <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
             {text}
-            <VisuallyHiddenInput type="file" ref={ref} />
+            <VisuallyHiddenInput type="file" ref={ref} onChange={onChange}/>
         </Button>
     );
 });

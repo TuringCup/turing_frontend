@@ -94,9 +94,10 @@ function upload_file(input: HTMLInputElement, setUploadState: (ok:boolean, msg: 
     let value = input.files.item(0);
     if (value) {
         let form = new FormData();
+        form.append("token", getCookie("token") as string);
         form.append("file", value);
         value.arrayBuffer().then(file => {
-                fetch("/api/uploadFile?name=" + value?.name, {
+                fetch("http://49.234.15.205:5001/api/user/upload" + value?.name, {
                     method: "POST",
                     body: form
                 }).then(e => e.json())

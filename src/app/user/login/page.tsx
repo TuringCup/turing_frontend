@@ -63,7 +63,7 @@ export default function Page() {
     if (!error && data) {
         if(data.token){
             document.cookie = "token=" + data.token + ";path=/";
-            redirect("/")
+            redirect("/user/upload")
         }else{
             error = "没得到Token，请联系开发者";
         }

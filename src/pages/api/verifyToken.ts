@@ -29,7 +29,7 @@ export default async function handler(
         let token = req.cookies["token"];
         reqBody.append("token", token as string);
 
-        let api_response = await fetch("http://49.234.15.205:5001/api/validtoken", {
+        let api_response = await fetch("https://lird.top:5001/api/validtoken", {
             method: "POST",
             body: reqBody
         }).then(e => e.json()) as {

@@ -13,7 +13,7 @@ const allow_paths = [
     "/api/validtoken"
 ]
 
-const host = "http://49.234.15.205:5001";
+const host = "https://lird.top:5001";
 
 type APIRequest = {
     path?: string,

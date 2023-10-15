@@ -28,7 +28,7 @@ export default async function handler(
         reqBody.append("token", token as string);
         reqBody.append("file", file_data, req.query["name"] as string | undefined ?? "upload.zip");
 
-        let api_response = await fetch("http://49.234.15.205:5001/api/user/upload", {
+        let api_response = await fetch("https://lird.top:5001/api/user/upload", {
             method: "POST",
             body: reqBody
         }).then(e => e.json()) as {

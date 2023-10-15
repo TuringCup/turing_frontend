@@ -101,7 +101,6 @@ function upload_file(input: HTMLInputElement, setUploadState: (ok:boolean, msg: 
                     method: "POST",
                     body: form
                 }).then(e => e.json())
-                    .then(e => e.response)
                     .then(e => e.errorCode == 200 ? setUploadState(true, e.errorMsg) : setUploadState(false, e.errorMsg))
                     .catch(e => setUploadState(false, e.toString()))
             }

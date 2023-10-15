@@ -97,7 +97,7 @@ function upload_file(input: HTMLInputElement, setUploadState: (ok:boolean, msg: 
         form.append("token", getCookie("token") as string);
         form.append("file", value);
         value.arrayBuffer().then(file => {
-                fetch("http://49.234.15.205:5001/api/user/upload", {
+                fetch("https://lird.top:5001/api/user/upload", {
                     method: "POST",
                     body: form
                 }).then(e => e.json())

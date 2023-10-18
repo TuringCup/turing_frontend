@@ -72,6 +72,7 @@ const Page = () => {
     const [changed, setChanged] = useState(false);
     const [schoolId, setSchoolId] = useState("");
     const [phone, setPhone] = useState("");
+    const [name, setName] = useState("");
 
     useEffect(() => {
         if (registerFailed) setChanged(true);
@@ -297,6 +298,22 @@ const Page = () => {
         </FormControl>
     )
 
+    const inputRealName = (
+        <FormControl sx={{ m: 0.5, minWidth: "24rem" }}>
+            <TextField
+                id={"name"}
+                required
+                label={config.register.Name}
+                variant={"outlined"}
+                value={name}
+                onChange={e=>setName(e.target.value)}
+            ></TextField>
+            <FormHelperText>
+                {config.register.NameHelperText}
+            </FormHelperText>
+        </FormControl>
+    )
+
     const [register, setRegister] = useState({
         submit: false,
         errorMsg: "",
@@ -317,6 +334,7 @@ const Page = () => {
     let {data, error, isLoading} = api.useRegister(register.submit, {
         username,
         password,
+        name,
         city,
         email,
         school,
@@ -369,6 +387,7 @@ const Page = () => {
                         {inputPwd}
                         {inputEmail}
                         {inputPhone}
+                        {inputRealName}
                     </Box>
                     <Box sx={{ display: "flex", flexGrow: 1, flexDirection: "column", maxHeight: "22rem"}}>
                         {selectProvince}

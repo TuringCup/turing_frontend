@@ -37,6 +37,7 @@ export interface RegisterRequest {
     school: string;
     schoolId: string;
     username: string;
+    name: string;
 }
 
 interface RegisterResponse {

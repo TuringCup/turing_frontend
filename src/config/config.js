@@ -2,7 +2,7 @@ const config = {
     Title: "图灵杯",
     Description: "图灵杯官网",
     appbar:{
-        Title: "图灵杯官网",
+        Title: "中兴·图灵杯官网",
         ProfileTooltip: "用户",
         profile_menu:{
             Register: "注册",
@@ -27,7 +27,9 @@ const config = {
         RegisterFailedText: "注册失败",
         SchoolID: "本校学号",
         Phone: "手机号",
-        PhoneHelperText: "你的常用手机号"
+        PhoneHelperText: "你的常用手机号",
+        Name: "真实姓名",
+        NameHelperText: "你的真实姓名",
     },
     login:{
         LoginText: "登陆",
